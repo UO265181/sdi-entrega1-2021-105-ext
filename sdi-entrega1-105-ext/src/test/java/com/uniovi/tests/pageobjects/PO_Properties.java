@@ -18,16 +18,12 @@ public class PO_Properties {
 	static int SPANISH = 0;
 	static int ENGLISH = 1;	
 	static Locale[] idioms = new Locale[] {new Locale("ES"), new Locale("EN")};
-	//static Properties p = new Properties();
-	public PO_Properties(String Path) //throws FileNotFoundException, IOException 
+	public PO_Properties(String Path) 
 	{
 		this.Path = Path;
-		//p.load(new FileReader(Path));
-		//p.getProperty()
 	}
-	//
-	// locale is de index in idioms array.
-	//
+	
+	
     public String getString(String prop, int locale) {
 		
 		ResourceBundle bundle = ResourceBundle.getBundle(Path, idioms[locale]);
@@ -36,7 +32,6 @@ public class PO_Properties {
 		try {
 			result = new String(value.getBytes("ISO-8859-1"), "UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;
