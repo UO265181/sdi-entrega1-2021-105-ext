@@ -55,5 +55,16 @@ public class SaleController {
 		saleService.addOferta(sale);
 		return "redirect:/sale/list";
 	}
+	
+	
+	@RequestMapping("/sale/list")
+	public String getList(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User user = userService.getUserByEmail(email);
+		model.addAttribute("sales", saleService.getOfertasByOwner(user));
+		
+		return "sale/list";
+	}
 
 }

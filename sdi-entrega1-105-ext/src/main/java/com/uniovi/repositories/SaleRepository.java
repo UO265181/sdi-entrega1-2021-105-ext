@@ -36,7 +36,8 @@ public interface SaleRepository extends CrudRepository<Sale, Long> {
 	@Query("SELECT o FROM Sale o WHERE o.userBuyer.id=?1")
 	List<Sale> findAllByBuyer(Long id);
 	
-	List<Sale> findAllByUser(User user);
+	@Query("SELECT o FROM Sale o WHERE o.user.id=?1")
+	List<Sale> findAllByUser(Long id);
 
 	@Transactional
 	@Modifying

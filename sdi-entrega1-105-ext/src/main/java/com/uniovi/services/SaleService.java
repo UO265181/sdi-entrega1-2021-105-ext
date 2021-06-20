@@ -66,11 +66,6 @@ public class SaleService {
 		saleRepository.updateComprada(id,idUser,b);
 	}
 
-	public List<Sale> getOfertasByBuyer(User buyer) {
-		List<Sale> ofertas = new ArrayList<Sale>();
-		saleRepository.findAllByBuyer(buyer.getId()).forEach(ofertas::add);;
-		return ofertas;
-	}
 
 	public void deleteOfertaByUserId(long id) {
 		saleRepository.deleteOfertaByUserId(id);
@@ -88,5 +83,18 @@ public class SaleService {
 		ofertas=saleRepository.findAll(pageable);
 		return ofertas;
 	}
+
+	public Object getOfertasByOwner(User user) {
+		List<Sale> ofertas = new ArrayList<Sale>();
+		saleRepository.findAllByUser(user.getId()).forEach(ofertas::add);;
+		return ofertas;
+	}
+	
+	public List<Sale> getOfertasByBuyer(User buyer) {
+		List<Sale> ofertas = new ArrayList<Sale>();
+		saleRepository.findAllByBuyer(buyer.getId()).forEach(ofertas::add);;
+		return ofertas;
+	}
+
 
 }
