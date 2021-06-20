@@ -18,7 +18,7 @@ public class User {
 
 	private String password;
 	@Transient
-	private String passwordConfirm;
+	private String password2;
 
 	@Transient
 	private boolean selected;
@@ -90,12 +90,12 @@ public class User {
 		this.password = password;
 	}
 
-	public String getPasswordConfirm() {
-		return passwordConfirm;
+	public String getPassword2() {
+		return password2;
 	}
 
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
+	public void setPassword2(String password2) {
+		this.password2 = password2;
 	}
 
 	public double getDinero() {

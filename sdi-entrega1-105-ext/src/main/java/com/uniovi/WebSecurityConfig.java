@@ -25,14 +25,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 
 	
-	//Los administradores tienen permiso para acceder a la sección de usuarios y los usarios a las de ofertas
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		
 		http.csrf().disable().authorizeRequests()
-				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup", "/customLogin", "/login/**")
-				.permitAll().antMatchers("/user/**").hasAuthority("ROLE_ADMIN").antMatchers("/sale/**")
-				.hasAuthority("ROLE_USER").antMatchers("/conversation/**").hasAuthority("ROLE_USER").anyRequest()
-				.authenticated().and().formLogin().loginPage("/login").permitAll();
+		.antMatchers("/css/**","/img/**", "/", "/signup", "/login/**").permitAll()
+		.antMatchers("/user/list").hasAnyAuthority("ROLE_ADMIN")
+		.antMatchers("/sale/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+		.anyRequest().authenticated().and().formLogin()
+		.loginPage("/login").permitAll().defaultSuccessUrl("/home").and().logout().permitAll();
 
 	}
 

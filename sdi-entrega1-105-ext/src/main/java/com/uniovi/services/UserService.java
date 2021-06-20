@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +21,8 @@ public class UserService {
 	//@Autowired
 	//private SaleService ofertasService;
 
-
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
 	@Autowired
 	private RoleService rolesService;
@@ -38,7 +40,7 @@ public class UserService {
 	public void addUser(User user) {
 		user.setRole(rolesService.getRoles()[0]);
 		user.setDinero(100.0);
-		user.setPassword(user.getPassword());
+		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		usersRepository.save(user);
 	}
 

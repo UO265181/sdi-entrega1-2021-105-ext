@@ -37,7 +37,7 @@ public class CustomConfiguration implements WebMvcConfigurer {
 		registry.addInterceptor(localeChangeInterceptor());
 	}
 	
-	//Configuración de paginación een 5 elementos por página
+
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
 		int page= 0;int size= 5;
