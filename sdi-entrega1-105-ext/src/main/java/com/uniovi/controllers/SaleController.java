@@ -1,5 +1,8 @@
 package com.uniovi.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.Sale;
 import com.uniovi.entities.User;
@@ -79,6 +83,35 @@ public class SaleController {
 			saleService.deleteOferta(id);
 		}
 		return "redirect:/sale/list";
+	}
+	
+	@RequestMapping(value = "/sale/search", method = RequestMethod.GET)
+	public String listOferta(Model model, @RequestParam(required = false) String titleInputSearch,
+			@RequestParam(required = false) boolean noMoney) {
+		
+		List<Sale> ofertas = new ArrayList<Sale>();
+
+		if (titleInputSearch != null && titleInputSearch != "") {
+			ofertas = saleService.getOfertasByTitle(titleInputSearch);
+			model.addAttribute("titleSearch", titleInputSearch);
+		} else {
+			ofertas = saleService.getOfertas();
+			model.addAttribute("titleSearch", "");
+		}
+		model.addAttribute("sales", ofertas);
+		model.addAttribute("noMoney", noMoney);
+		return "sale/search";
+	}
+	
+	@RequestMapping(value = "/sale/buy/{id}")
+	public String buyOferta(Model model, @PathVariable Long id) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = userService.getUserByEmail(email);
+
+		boolean noMoney = !userService.buyOferta(activeUser, saleService.getOferta(id));
+		return "redirect:/sale/search?noMoney=" + noMoney;
 	}
 
 }

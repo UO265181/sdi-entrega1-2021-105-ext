@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h2 th:text="#{buscarOferta.titulo}"></h2>
+		<form class="form-horizontal" method="get"
+			th:action="@{'/sale/search'(title=${titleSearch})}">
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary" th:text="#{buscarOferta.boton}" th:value="#{search.message}">Buscar</button>
+				<input name="titleInputSearch" th:value="${titleSearch}" />
+			</div>
+		</form>
+
+		<span th:if=${noMoney} class="text-danger" th:text="#{buscarOferta.noDinero}"></span>
+
+		<div class="table-responsive">
+			<table class="table table-hover" id="tableOfertas">
+				<thead>
+					<tr>
+						<th th:text="#{ofertas.titulo.atributo}"></th>
+						<th th:text="#{ofertas.detalle}"></th>
+						<th th:text="#{ofertas.precio}"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="sale : ${sales}">
+						<td th:text="${sale.titulo}"></td>
+						<td th:text="${sale.detalle}"></td>
+						<td th:text="${sale.precio}"></td>
+						<td><a th:if="${sale.comprada == false}" th:href="${'/sale/buy/' + sale.id}" th:text="#{buscarOferta.comprar}"></a></td>
+						<td><span th:if="${sale.comprada == true}" th:text="#{buscarOferta.vendida}"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>
