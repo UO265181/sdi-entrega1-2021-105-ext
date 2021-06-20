@@ -50,15 +50,9 @@ public class SaleService {
 		return ofertas;
 	}
 
-	@SuppressWarnings("unchecked")
+
 	public Sale getOferta(Long id) {
-		Set<Sale> consultedList = (Set<Sale>) httpSession.getAttribute("consultedList");
-		if (consultedList == null) {
-			consultedList = new HashSet<Sale>();
-		}
 		Sale obtainedoferta = saleRepository.findById(id).get();
-		consultedList.add(obtainedoferta);
-		httpSession.setAttribute("consultedList", consultedList);
 		return obtainedoferta;
 	}
 
