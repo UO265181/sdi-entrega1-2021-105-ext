@@ -22,8 +22,7 @@ import com.uniovi.repositories.SaleRepository;
 @Service
 public class SaleService {
 	
-	@Autowired
-	private HttpSession httpSession;
+
 	
 	@Autowired
 	private SaleRepository saleRepository;
@@ -52,17 +51,16 @@ public class SaleService {
 
 
 	public Sale getOferta(Long id) {
-		Sale obtainedoferta = saleRepository.findById(id).get();
-		return obtainedoferta;
+		return saleRepository.findById(id).get();
 	}
 
-	public void updateComprada(Long id, Long idUser, boolean b) {
-		saleRepository.updateComprada(id,idUser,b);
+	public void update(Sale sale) {
+		saleRepository.save(sale);
 	}
 
 
 	public void deleteOfertaByUserId(long id) {
-		saleRepository.deleteOfertaByUserId(id);
+		saleRepository.deleteById(id);
 	}
 
 	public Page<Sale> getOfertasByTitle(Pageable pageable, String title) {

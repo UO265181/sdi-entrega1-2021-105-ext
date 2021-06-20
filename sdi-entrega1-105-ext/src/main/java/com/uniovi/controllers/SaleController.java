@@ -3,6 +3,8 @@ package com.uniovi.controllers;
 
 import java.util.LinkedList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -35,6 +37,9 @@ public class SaleController {
 
 	@Autowired
 	private SaleValidator saleValidator;
+	
+	@Autowired
+	private HttpSession httpSession;
 	
 	
 	@RequestMapping(value = "/sale/add", method = RequestMethod.GET)
@@ -115,6 +120,11 @@ public class SaleController {
 		User activeUser = userService.getUserByEmail(email);
 
 		boolean noMoney = !userService.buyOferta(activeUser, saleService.getOferta(id));
+		
+		if(!noMoney) {
+			httpSession.setAttribute("user", userService.getUserByEmail(auth.getName()));
+		}
+				
 		return "redirect:/sale/search?noMoney=" + noMoney;
 	}
 	
