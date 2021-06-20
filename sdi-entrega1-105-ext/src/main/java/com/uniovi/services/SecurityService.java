@@ -22,6 +22,11 @@ public class SecurityService {
 
 	private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
 
+	/**
+	 * Logea al usuario
+	 * @param email
+	 * @param password
+	 */
 	public void autoLogin(String email, String password) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 		UsernamePasswordAuthenticationToken aToken = new UsernamePasswordAuthenticationToken(userDetails, password,
@@ -33,6 +38,12 @@ public class SecurityService {
 		}
 	}
 
+	/**
+	 * Comprueba si el usuario tiene datos correctos para logearse
+	 * @param email
+	 * @param password
+	 * @return true si son correctos, false si son incorrectos
+	 */
 	public boolean correctUser(String email, String password) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 		UsernamePasswordAuthenticationToken aToken = new UsernamePasswordAuthenticationToken(userDetails, password,

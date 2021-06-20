@@ -20,6 +20,9 @@ public class SignUpValidator implements Validator {
 		return User.class.equals(clazz);
 	}
 
+	/**
+	 * Validador del formulario de registro
+	 */
 	@Override
 	public void validate(Object target, Errors errors) {
 		User user= (User) target;
@@ -30,12 +33,12 @@ public class SignUpValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password2", "Error.vacio");
 		
 		
-		
+		//Email ya en uso
 		if(userService.getUserByEmail(user.getEmail()) != null) {
 			errors.rejectValue("email", "Error.signup.email.repetido");
 		}
 		
-		
+		//Las contraseñas no coinciden
 		if(!user.getPassword2().equals(user.getPassword())) {
 			errors.rejectValue("password2", "Error.signup.password2");
 		}

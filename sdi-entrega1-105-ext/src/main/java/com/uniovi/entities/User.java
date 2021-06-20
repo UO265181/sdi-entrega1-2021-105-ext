@@ -25,10 +25,10 @@ public class User {
 
 	private double dinero;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Sale> ofertas;
+	private Set<Sale> ofertas; //Creadas
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Sale> ofertasPurchased;
+	private Set<Sale> ofertasPurchased; //Compradas
 
 	public User(String nombre, String apellidos, String email) {
 		super();

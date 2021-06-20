@@ -16,6 +16,9 @@ public class SaleValidator implements Validator {
 		return Sale.class.equals(aClass);
 	}
 
+	/**
+	 * Validador del formulario de crear oferta
+	 */
 	@Override
 	public void validate(Object target, Errors errors) {
 		Sale sale = (Sale) target;
@@ -23,6 +26,7 @@ public class SaleValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "detalle", "Error.vacio");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "precio", "Error.vacio");
 		
+		//Precio mayor que cero
 		if (sale.getPrecio() <= 0.0) {
 			errors.rejectValue("precio", "Error.precio");
 		}

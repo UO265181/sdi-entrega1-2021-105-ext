@@ -24,6 +24,9 @@ public class LogInValidator implements Validator {
 		return User.class.equals(clazz);
 	}
 
+	/**
+	 * Validador del formulario de inicio de sesion
+	 */
 	@Override
 	public void validate(Object target, Errors errors) {
 		User user = (User) target;
@@ -31,11 +34,13 @@ public class LogInValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Error.vacio");
 
 		if (!user.getEmail().isEmpty() && !user.getPassword().isEmpty()) {
-
+			
+			///El email no existe
 			if (userService.getUserByEmail(user.getEmail()) == null) {
 				errors.rejectValue("email", "Error.login.email");
 			}
-
+			
+			//El email y la contraseña no coinciden
 			else if (!securityService.correctUser(user.getEmail(), user.getPassword())) {
 				errors.rejectValue("password", "Error.login.contrasena");
 			}

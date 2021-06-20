@@ -28,6 +28,9 @@ public class UserService {
 	private RoleService rolesService;
 	
 
+	/**
+	 * Devuelve todos los usuarios
+	 */
 	public List<User> getUsers() {
 		List<User> users = new ArrayList<User>();
 		usersRepository.findAll().forEach(users::add);
@@ -36,16 +39,24 @@ public class UserService {
 	
 
 
-
+	/**
+	 * Añade un usuario dado
+	 */
 	public void addUser(User user) {
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		usersRepository.save(user);
 	}
 
+	/**
+	 * Devuelve un usuario segun un email dado
+	 */
 	public User getUserByEmail(String email) {
 		return usersRepository.findByEmail(email);
 	}
 
+	/**
+	 * Elimina los usuarios de los emails dados
+	 */
 	public void deleteUsers(String[] emails) {
 		for(String email:emails) {
 			User user = usersRepository.findByEmail(email);
@@ -56,6 +67,9 @@ public class UserService {
 		}
 	}
 
+	/**
+	 * Devuelve todos los usuarios no administradores
+	 */
 	public List<User> getNotAdminUsers() {
 		List<User> users = getUsers();
 		List<User> notAdminUsers = new ArrayList<User>(); 
@@ -67,6 +81,12 @@ public class UserService {
 		return notAdminUsers;
 	}
 
+	/**
+	 * Intenta realizar una compra dado un usuario y una oferta
+	 * @param user
+	 * @param oferta
+	 * @return true si se efectua con exito, false si el usuario no tiene dinero suficiente
+	 */
 	@Transactional
 	public boolean buyOferta(User user, Sale oferta) {
 		if(user.getDinero()>=oferta.getPrecio()) {

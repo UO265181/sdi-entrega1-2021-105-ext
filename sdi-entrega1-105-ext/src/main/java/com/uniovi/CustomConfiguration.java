@@ -1,6 +1,5 @@
 package com.uniovi;
 
-
 import java.util.List;
 import java.util.Locale;
 import org.springframework.context.annotation.Bean;
@@ -16,37 +15,34 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
 public class CustomConfiguration implements WebMvcConfigurer {
-	
+
 	@Bean
 	public LocaleResolver localeResolver() {
-		
-		SessionLocaleResolver localeResolver= new SessionLocaleResolver();
+
+		SessionLocaleResolver localeResolver = new SessionLocaleResolver();
 		localeResolver.setDefaultLocale(new Locale("es", "ES"));
 		return localeResolver;
 	}
-	
+
 	@Bean
 	public LocaleChangeInterceptor localeChangeInterceptor() {
-		
-		LocaleChangeInterceptor localeChangeInterceptor= new LocaleChangeInterceptor();
+		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
 		localeChangeInterceptor.setParamName("lang");
 		return localeChangeInterceptor;
 	}
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(localeChangeInterceptor());
 	}
-	
 
 	@Override
 	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-		int page= 0;int size= 5;
-		PageableHandlerMethodArgumentResolver resolver= new PageableHandlerMethodArgumentResolver();
+		int page = 0;
+		int size = 5;
+		PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
 		resolver.setFallbackPageable(PageRequest.of(page, size));
 		argumentResolvers.add(resolver);
-		}
-	
-	
-	
-	
+	}
+
 }
