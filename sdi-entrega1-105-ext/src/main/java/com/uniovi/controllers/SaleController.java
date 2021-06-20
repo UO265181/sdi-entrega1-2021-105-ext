@@ -117,5 +117,16 @@ public class SaleController {
 		boolean noMoney = !userService.buyOferta(activeUser, saleService.getOferta(id));
 		return "redirect:/sale/search?noMoney=" + noMoney;
 	}
+	
+	@RequestMapping("/sale/purchased")
+	public String getPurchased(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = userService.getUserByEmail(email);
+
+		model.addAttribute("sales",saleService.getOfertasByBuyer(activeUser));
+		
+		return "sale/purchased";
+	}
 
 }
