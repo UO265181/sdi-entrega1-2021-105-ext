@@ -24,16 +24,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+
 		http.csrf().disable().authorizeRequests()
-		.antMatchers("/css/**","/img/**","/script/**", "/", "/signup", "/login/**").permitAll()
-		.antMatchers("/user/list").hasAnyAuthority("ROLE_ADMIN")
-		.antMatchers("/sale/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
-		.anyRequest().authenticated().and().formLogin()
-		.loginPage("/login").permitAll().defaultSuccessUrl("/home").and().logout().permitAll();
+				.antMatchers("/css/**", "/img/**", "/script/**", "/", "/signup", "/myLogin", "/login/**").permitAll()
+				.antMatchers("/user/list").hasAnyAuthority("ROLE_ADMIN").antMatchers("/sale/**")
+				.hasAnyAuthority("ROLE_USER", "ROLE_ADMIN").anyRequest().authenticated().and().formLogin()
+				.loginPage("/login").permitAll();
 
 	}
 

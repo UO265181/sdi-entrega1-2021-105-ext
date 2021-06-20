@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,16 +13,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SecurityService {
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
+
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
-	private static final Logger logger= LoggerFactory.getLogger(SecurityService.class);
-	
-	
+
+	private static final Logger logger = LoggerFactory.getLogger(SecurityService.class);
+
 	public void autoLogin(String email, String password) {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 		UsernamePasswordAuthenticationToken aToken = new UsernamePasswordAuthenticationToken(userDetails, password,
@@ -32,6 +32,17 @@ public class SecurityService {
 			logger.debug(String.format("Auto login %s successfully!", email));
 		}
 	}
-	
+
+	public boolean correctUser(String email, String password) {
+		UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+		UsernamePasswordAuthenticationToken aToken = new UsernamePasswordAuthenticationToken(userDetails, password,
+				userDetails.getAuthorities());
+		try {
+			authenticationManager.authenticate(aToken);
+		} catch (AuthenticationException e) {
+			return false;
+		}
+		return true;
+	}
 
 }
