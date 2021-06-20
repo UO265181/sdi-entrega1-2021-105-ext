@@ -1,0 +1,62 @@
+<!--nav.html -->
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<img src="/img/logo.png" alt="logo" />
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li sec:authorize="isAuthenticated()"><a href="/home"><span
+						th:text="#{nav.inicio}"></span></a></li>
+				<li id="menu-user" class="dropdown"
+					sec:authorize="hasRole('ROLE_ADMIN')"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown"> <span
+						th:text="#{nav.usuarios}"></span> <span class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/user/list"><span
+								th:text="#{nav.verUsuarios}"></span></a></li>
+					</ul></li>
+				<li sec:authorize="hasRole('ROLE_USER')" id="menu-sale"
+					class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> <span th:text="#{nav.ofertas}"></span><span
+						class="caret"></span>
+				</a>
+					<ul class="dropdown-menu">
+						<li><a href="/sale/add"><span
+								th:text="#{nav.crearOferta}"></span></a></li>
+						<li><a href="/sale/list"><span
+								th:text="#{nav.buscarOfertas}"></span></a></li>
+						<li><a href="/sale/purchased"><span
+								th:text="#{nav.ofertasAdquiridas}"></span></a></li>
+					</ul></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown"><a id="btnLanguage" href="#"
+					class="dropdown-toggle" data-toggle="dropdown" role="button"
+					aria-haspopup="true" aria-expanded="false"> <span
+						th:text="#{nav.idioma}"></span> <span class="caret"></span>
+				</a>
+					<ul id="languageDropdownMenuButton" class="dropdown-menu">
+						<li><a id="btnEnglish" value="EN"> <img
+								th:src="@{/img/if_uk_flag.png}"
+								style="border: 0; float: left; margin-right: 15px" /> <span
+								th:text="#{nav.idioma.ingles}"></span>
+						</a></li>
+						<li><a id="btnSpanish" value="ES"> <img
+								th:src="@{/img/if_spain_flag.png}"
+								style="border: 0; float: left; margin-right: 15px" /> <span
+								th:text="#{nav.idioma.castellano}"></span>
+						</a></li>
+					</ul>
+				<li sec:authorize="!isAuthenticated()"><a href="/signup"
+					th:text="#{nav.registrarse}"></a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="/login"
+					th:text="#{nav.identificarse}"></a></li>
+				<li sec:authorize="isAuthenticated()"><a href="/logout"
+					th:text="#{nav.salir}"><span class="glyphicon glyphicon-log-in"></span>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
