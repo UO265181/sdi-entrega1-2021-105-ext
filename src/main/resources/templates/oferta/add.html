@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	
+	<div class="container">
+		<h2 th:text=#{agregate.message}>Agregar Oferta</h2>
+		<form class="form-horizontal" method="post" action="/oferta/add" th:object="${oferta}">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="user" th:text=#{userTD.message}>Usuario:</label>
+				<div class="col-sm-10"
+					th:if="${usersList != null and not #lists.isEmpty(usersList)}">
+					<select id="user" class="form-control" name="user">
+						<option th:each="user : ${usersList}" th:value="${user.id}"
+							th:text="${user.email}+' - '+${user.nombre}+' ' +${user.apellidos} ">
+							Usuario</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="titulo" th:text=#{title.message}>Titulo:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="titulo"
+						placeholder="Ejemplo"  /> <span
+						class="text-danger" th:if="${#fields.hasErrors('titulo')}"
+						th:errors="*{titulo}">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="detalle" th:text=#{detail.message}>Detalle:</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" name="detalle"
+						placeholder="Ejemplo" /> <span
+						class="text-danger" th:if="${#fields.hasErrors('detalle')}"
+						th:errors="*{detalle}">
+				</div>
+			</div>
+			<div class="form-group">
+
+				<label class="control-label col-sm-2" for="cantidad" th:text=#{amount.message}>Cantidad:</label>
+
+				<div class="col-sm-10">
+					<input type="number" class="form-control" name="cantidad"
+						placeholder="Ejemplo"  /> <span
+						class="text-danger" th:if="${#fields.hasErrors('cantidad')}"
+						th:errors="*{cantidad}">
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary" th:text=#{send.message}>Enviar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

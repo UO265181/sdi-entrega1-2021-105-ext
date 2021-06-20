@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<nav th:replace="fragments/nav" />
+	<div class="container" style="text-align: center">
+		<h2>Wallapop - SDI</h2>
+		<p>
+			<span th:text=#{registeredAs.message}>Registrado como:</span> <span
+				sec:authentication="principal.username"></span>
+		</p>
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

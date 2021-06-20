@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+	<div class="container">
+		<h2 th:text="#{users.message}"></h2>
+		<p th:text="#{usersListText.message}"></p>
+		<form class="form-horizontal" method="post" action="/user/list" th:object=${userListWrapper}>
+			<div class="table-responsive">
+				<table class="table table-hover" id="tableUsers">
+					<thead>
+						<tr>
+							<th>Email</th>
+							<th th:text="#{name.message}">Nombre</th>
+							<th th:text="#{lastName.message}">Apellidos</th>
+							<th class="col-md-1"></th>
+							<th class="col-md-1"></th>
+							<th class="col-md-1"></th>
+							<th class="col-md-1"></th>
+							<th class="col-md-1"></th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<tr th:each="user, itemStat : *{users}">
+							<input hidden th:name="|users[${itemStat.index}].id|" th:value="${user.id}"/>
+							<input hidden th:name="|users[${itemStat.index}].email|" th:value="${user.email}"/>
+							<input hidden th:name="|users[${itemStat.index}].nombre|" th:value="${user.nombre}"/>
+							<input hidden th:name="|users[${itemStat.index}].apellidos|" th:value="${user.apellidos}"/>
+							<td th:text="${user.email}"></td>
+							<td th:text="${user.nombre}"></td>
+							<td th:text="${user.apellidos}"></td>
+							<td><input type="checkbox" th:name="|users[${itemStat.index}].selected|" th:checked="${user.selected}"></td>
+							<!-- th:checked="${myBooleanVariable}" -->
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<input type="submit" name="bEliminar" th:value="#{deleteSelected.message}" class="btn btn-danger">
+		</form>
+	</div>
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

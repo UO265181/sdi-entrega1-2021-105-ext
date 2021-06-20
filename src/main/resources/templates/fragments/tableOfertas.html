@@ -1,0 +1,25 @@
+<table class="table table-hover" th:fragment="tableOfertas"
+	id="tableOfertas">
+	<thead>
+		<tr>
+			<th class="col-md-1">id</th>
+			<th th:text=#{title.message}>Titulo</th>
+			<th th:text=#{detail.message}>Detalle</th>
+			<th th:text=#{amount.message}>Cantidad</th>
+			<th class="col-md-1"></th>
+			<th class="col-md-1"></th>
+			<th class="col-md-1"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="oferta : ${ofertaList}">
+			<td th:text="${oferta.id}">1</td>
+			<td th:text="${oferta.titulo}">Titulo</td>
+			<td th:text="${oferta.detalle}">Detalle</td>
+			<td th:text="${oferta.cantidad}">Cantidad</td>
+			<td><a th:href="${'/oferta/delete/' + oferta.id}">eliminar</a></td>
+
+
+		</tr>
+	</tbody>
+</table>
