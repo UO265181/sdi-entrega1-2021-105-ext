@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.RoleService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UserService;
 import com.uniovi.validators.LogInValidator;
@@ -36,6 +37,9 @@ public class UserController {
 	@Autowired
 	private SecurityService securityService;
 	
+	@Autowired
+	private RoleService roleService;
+	
 	
 	@Autowired
 	private HttpSession httpSession;
@@ -56,6 +60,9 @@ public class UserController {
 			return "signup";
 		}
 
+
+		user.setRole(roleService.getRoles()[0]);
+		user.setDinero(100.0);
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPassword2());
 		httpSession.setAttribute("user", user);

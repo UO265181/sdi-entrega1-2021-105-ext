@@ -18,8 +18,8 @@ public class UserService {
 	@Autowired
 	private UserRepository usersRepository;
 	
-	//@Autowired
-	//private SaleService ofertasService;
+	@Autowired
+	private SaleService saleService;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -38,8 +38,6 @@ public class UserService {
 
 
 	public void addUser(User user) {
-		user.setRole(rolesService.getRoles()[0]);
-		user.setDinero(100.0);
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		usersRepository.save(user);
 	}
@@ -51,7 +49,7 @@ public class UserService {
 	public void deleteUsers(List<User> users) {
 		for(User user:users) {
 			if(user.isSelected()) {
-				//ofertasService.deleteOfertaByUserId(user.getId());
+				saleService.deleteOfertaByUserId(user.getId());
 				usersRepository.delete(user);
 			}
 		}
@@ -72,7 +70,7 @@ public class UserService {
 	public boolean buyOferta(User user, Sale oferta) {
 		if(user.getDinero()>=oferta.getCantidad()) {
 			usersRepository.updateDinero(user.getId(), user.getDinero()-oferta.getCantidad());
-			//ofertasService.updateComprada(oferta.getId(),user.getId(), true);
+			saleService.updateComprada(oferta.getId(),user.getId(), true);
 			return true;
 		}
 		return false;
