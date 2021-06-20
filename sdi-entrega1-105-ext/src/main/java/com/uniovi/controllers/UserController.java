@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.RoleService;
@@ -17,34 +19,26 @@ import com.uniovi.services.UserService;
 import com.uniovi.validators.LogInValidator;
 import com.uniovi.validators.SignUpValidator;
 
-
-
-
 @Controller
 public class UserController {
-	
-	
-	
-	@Autowired 
+
+	@Autowired
 	private UserService usersService;
-	
+
 	@Autowired
 	private SignUpValidator signUpValidator;
-	
+
 	@Autowired
 	private LogInValidator logInValidator;
-	
+
 	@Autowired
 	private SecurityService securityService;
-	
+
 	@Autowired
 	private RoleService roleService;
-	
-	
+
 	@Autowired
 	private HttpSession httpSession;
-	
-
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
@@ -60,7 +54,6 @@ public class UserController {
 			return "signup";
 		}
 
-
 		user.setRole(roleService.getRoles()[0]);
 		user.setDinero(100.0);
 		usersService.addUser(user);
@@ -68,8 +61,7 @@ public class UserController {
 		httpSession.setAttribute("user", user);
 		return "redirect:home";
 	}
-	
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		model.addAttribute("user", new User());
@@ -80,7 +72,6 @@ public class UserController {
 	public String customLogin() {
 		return "redirect:/login";
 	}
-
 
 	@RequestMapping(value = "/myLogin", method = RequestMethod.POST)
 	public String customLogin(User user, BindingResult result) {
@@ -95,5 +86,21 @@ public class UserController {
 		return "redirect:/home";
 
 	}
-	
+
+	@RequestMapping("/user/list")
+	public String getList(Model model) {
+		model.addAttribute("usersList", usersService.getNotAdminUsers());
+		return "user/list";
+	}
+
+	@RequestMapping(value = "/user/delete", method = RequestMethod.POST)
+	public String deleteUser(@RequestParam(value = "checkboxUser", required = false) String checkboxValue[]) {
+		
+		if(checkboxValue!=null) {
+			usersService.deleteUsers(checkboxValue);
+		}
+
+		return "redirect:/user/list";
+	}
+
 }

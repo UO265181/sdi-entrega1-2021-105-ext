@@ -46,12 +46,11 @@ public class UserService {
 		return usersRepository.findByEmail(email);
 	}
 
-	public void deleteUsers(List<User> users) {
-		for(User user:users) {
-			if(user.isSelected()) {
-				saleService.deleteOfertaByUserId(user.getId());
-				usersRepository.delete(user);
-			}
+	public void deleteUsers(String[] emails) {
+		for(String email:emails) {
+			User user = usersRepository.findByEmail(email);
+			saleService.deleteOfertaByUserId(user.getId());
+			usersRepository.delete(user);
 		}
 	}
 
@@ -75,4 +74,7 @@ public class UserService {
 		}
 		return false;
 	}
+
+
+
 }
