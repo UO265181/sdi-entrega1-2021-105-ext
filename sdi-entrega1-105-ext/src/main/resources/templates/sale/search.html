@@ -10,12 +10,14 @@
 		<form class="form-horizontal" method="get"
 			th:action="@{'/sale/search'(title=${titleSearch})}">
 			<div class="form-group">
-				<button type="submit" class="btn btn-primary" th:text="#{buscarOferta.boton}" th:value="#{search.message}">Buscar</button>
+				<button type="submit" class="btn btn-primary"
+					th:text="#{buscarOferta.boton}" th:value="#{search.message}"></button>
 				<input name="titleInputSearch" th:value="${titleSearch}" />
 			</div>
 		</form>
 
-		<span th:if=${noMoney} class="text-danger" th:text="#{buscarOferta.noDinero}"></span>
+		<span th:if=${noMoney} class="text-danger"
+			th:text="#{buscarOferta.noDinero}"></span>
 
 		<div class="table-responsive">
 			<table class="table table-hover" id="tableOfertas">
@@ -33,12 +35,16 @@
 						<td th:text="${sale.titulo}"></td>
 						<td th:text="${sale.detalle}"></td>
 						<td th:text="${sale.precio}"></td>
-						<td><a th:if="${sale.comprada == false}" th:href="${'/sale/buy/' + sale.id}" th:text="#{buscarOferta.comprar}"></a></td>
-						<td><span th:if="${sale.comprada == true}" th:text="#{buscarOferta.vendida}"></span></td>
+						<td><a th:if="${sale.comprada == false}"
+							th:href="${'/sale/buy/' + sale.id}"
+							th:text="#{buscarOferta.comprar}"></a></td>
+						<td><span th:if="${sale.comprada == true}"
+							th:text="#{buscarOferta.vendida}"></span></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<footer th:replace="fragments/pagination" />
 	</div>
 	<footer th:replace="fragments/footer" />
 </body>

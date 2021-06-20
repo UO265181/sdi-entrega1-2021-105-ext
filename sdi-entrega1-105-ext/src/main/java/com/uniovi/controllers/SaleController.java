@@ -1,9 +1,12 @@
 package com.uniovi.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -86,19 +89,20 @@ public class SaleController {
 	}
 	
 	@RequestMapping(value = "/sale/search", method = RequestMethod.GET)
-	public String listOferta(Model model, @RequestParam(required = false) String titleInputSearch,
+	public String listOferta(Model model, Pageable pageable, @RequestParam(required = false) String titleInputSearch,
 			@RequestParam(required = false) boolean noMoney) {
 		
-		List<Sale> ofertas = new ArrayList<Sale>();
+		Page<Sale> ofertas= new PageImpl<Sale>(new LinkedList<Sale>());
 
-		if (titleInputSearch != null && titleInputSearch != "") {
-			ofertas = saleService.getOfertasByTitle(titleInputSearch);
+		if (titleInputSearch != null && !titleInputSearch.isEmpty()) {
+			ofertas = saleService.getOfertasByTitle(pageable, titleInputSearch);
 			model.addAttribute("titleSearch", titleInputSearch);
 		} else {
-			ofertas = saleService.getOfertas();
+			ofertas = saleService.getOfertas(pageable);
 			model.addAttribute("titleSearch", "");
 		}
-		model.addAttribute("sales", ofertas);
+		model.addAttribute("sales", ofertas.getContent());
+		model.addAttribute("page", ofertas);
 		model.addAttribute("noMoney", noMoney);
 		return "sale/search";
 	}
