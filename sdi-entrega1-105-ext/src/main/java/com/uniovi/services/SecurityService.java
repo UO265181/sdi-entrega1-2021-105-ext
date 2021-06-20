@@ -51,8 +51,10 @@ public class SecurityService {
 		try {
 			authenticationManager.authenticate(aToken);
 		} catch (AuthenticationException e) {
+			logger.debug(email+ " failed to logIn with pass: "+password);
 			return false;
 		}
+		
 		return true;
 	}
 

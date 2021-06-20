@@ -18,6 +18,7 @@ public class PO_Properties {
 	static int SPANISH = 0;
 	static int ENGLISH = 1;	
 	static Locale[] idioms = new Locale[] {new Locale("ES"), new Locale("EN")};
+	@SuppressWarnings("static-access")
 	public PO_Properties(String Path) 
 	{
 		this.Path = Path;
