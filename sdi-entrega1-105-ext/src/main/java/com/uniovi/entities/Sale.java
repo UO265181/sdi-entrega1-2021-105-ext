@@ -13,7 +13,7 @@ public class Sale {
 	private String titulo;
 	private String detalle;
 	private Date fecha;
-	private double cantidad;
+	private double precio;
 	private boolean comprada;
 	
 	@ManyToOne
@@ -26,22 +26,22 @@ public class Sale {
 	
 
 
-	public Sale(String titulo, String detalle, double cantidad, User user) {
+	public Sale(String titulo, String detalle, double precio, User user) {
 		super();
 		this.titulo = titulo;
 		this.detalle = detalle;
-		this.cantidad = cantidad;
+		this.precio = precio;
 		this.user = user;
 		this.fecha = new Date(System.currentTimeMillis());
 		this.comprada = false;
 	}
 	
-	public Sale(Long id, String titulo, String detalle, double cantidad) {
+	public Sale(Long id, String titulo, String detalle, double precio) {
 		super();
 		this.id = id;
 		this.titulo = titulo;
 		this.detalle = detalle;
-		this.cantidad = cantidad;
+		this.precio = precio;
 		this.fecha = new Date(System.currentTimeMillis());
 		this.comprada = false;
 	}
@@ -81,12 +81,12 @@ public class Sale {
 		this.fecha = fecha;
 	}
 
-	public double getCantidad() {
-		return cantidad;
+	public double getPrecio() {
+		return precio;
 	}
 
-	public void setCantidad(double cantidad) {
-		this.cantidad = cantidad;
+	public void setPrecio(double precio) {
+		this.precio = precio;
 	}
 
 	public boolean isComprada() {
@@ -107,8 +107,8 @@ public class Sale {
 
 	@Override
 	public String toString() {
-		return "Oferta [id=" + id + ", titulo=" + titulo + ", detalle=" + detalle + ", fecha=" + fecha + ", cantidad="
-				+ cantidad + ", comprada=" + comprada + "]";
+		return "Oferta [id=" + id + ", titulo=" + titulo + ", detalle=" + detalle + ", fecha=" + fecha + ", precio="
+				+ precio + ", comprada=" + comprada + "]";
 	}
 	
 	

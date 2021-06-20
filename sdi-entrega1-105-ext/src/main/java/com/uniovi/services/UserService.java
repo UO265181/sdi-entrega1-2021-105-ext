@@ -67,8 +67,8 @@ public class UserService {
 
 	@Transactional
 	public boolean buyOferta(User user, Sale oferta) {
-		if(user.getDinero()>=oferta.getCantidad()) {
-			usersRepository.updateDinero(user.getId(), user.getDinero()-oferta.getCantidad());
+		if(user.getDinero()>=oferta.getPrecio()) {
+			usersRepository.updateDinero(user.getId(), user.getDinero()-oferta.getPrecio());
 			saleService.updateComprada(oferta.getId(),user.getId(), true);
 			return true;
 		}
