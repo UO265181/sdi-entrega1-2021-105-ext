@@ -37,6 +37,7 @@ public interface SaleRepository extends CrudRepository<Sale, Long> {
 	@Query("SELECT o FROM Sale o WHERE LOWER(o.titulo) LIKE LOWER(?1)")
 	Page<Sale> findAllByTitle(Pageable pageable, String title);
 
+	@Query("SELECT o FROM Sale o ORDER BY o.titulo")
 	Page<Sale> findAll(Pageable pageable);
 
 

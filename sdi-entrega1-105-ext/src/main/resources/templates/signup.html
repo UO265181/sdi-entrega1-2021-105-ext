@@ -36,14 +36,14 @@
     <div class="form-group">
     	<label class="control-label col-sm-2" for="password"><span th:text="#{registrarse.contrasena}"></span></label>
     	<div class="col-sm-10">
-    		<input type="password" class="form-control" name="password" required="true" />
+    		<input type="password" class="form-control" name="password"/>
     		<span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     	</div>
     </div>
     <div class="form-group">
     	<label class="control-label col-sm-2" for="password2"><span th:text="#{registrarse.repetirContrasena}"></span></label>
     	<div class="col-sm-10">
-    		<input type="password" class="form-control" name="password2" required="true"/>
+    		<input type="password" class="form-control" name="password2"/>
     		<span class="text-danger" th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></span>
     	</div>
     </div>

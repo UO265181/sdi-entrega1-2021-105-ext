@@ -105,6 +105,14 @@ public class Sale {
 		this.user = user;
 	}
 
+	public User getUserBuyer() {
+		return userBuyer;
+	}
+
+	public void setUserBuyer(User userBuyer) {
+		this.userBuyer = userBuyer;
+	}
+
 	@Override
 	public String toString() {
 		return "Oferta [id=" + id + ", titulo=" + titulo + ", detalle=" + detalle + ", fecha=" + fecha + ", precio="

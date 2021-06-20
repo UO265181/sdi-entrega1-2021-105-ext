@@ -49,7 +49,9 @@ public class UserService {
 	public void deleteUsers(String[] emails) {
 		for(String email:emails) {
 			User user = usersRepository.findByEmail(email);
-			saleService.deleteOfertaByUserId(user.getId());
+			for(Sale sale:user.getOfertas()) {
+				saleService.deleteOferta(sale.getId());
+			}
 			usersRepository.delete(user);
 		}
 	}
@@ -72,6 +74,7 @@ public class UserService {
 			user.setDinero(Math.round(nuevoDinero*100.0)/100.0);
 			usersRepository.save(user);
 			oferta.setComprada(true);
+			oferta.setUserBuyer(user);
 			saleService.update(oferta);
 			return true;
 		}
